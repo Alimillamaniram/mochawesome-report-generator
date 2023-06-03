@@ -1,0 +1,52 @@
+// login.steps.js
+import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+
+Given('User is on the login page', () => {
+  cy.visit('https://www.testyou.in/Login.aspx');
+});
+When('User enters Facebook account credentials', () => {
+  // Enter Facebook account credentials
+  cy.get('#ctl00_CPHContainer_Button3').click();
+  cy.get('#facebookUsername').type('your_facebook_username');
+  cy.get('#facebookPassword').type('your_facebook_password');
+});
+
+When('User enters Google account credentials', () => {
+  // Enter Google account credentials
+  cy.get('.adm_control_box.float_left > a > img').click();
+  cy.get('#googleUsername').type('your_google_username');
+  cy.get('#googlePassword').type('your_google_password');
+});
+
+When('User enters normal account credentials', () => {
+  // Enter normal account credentials
+  cy.get('#ctl00_CPHContainer_txtUserLogin').type('your_normal_username');
+  cy.get('#ctl00_CPHContainer_txtPassword').type('your_normal_password');
+});
+
+When('User enters an invalid User ID', () => {
+  // Enter invalid User ID
+  cy.get('#ctl00_CPHContainer_txtUserLogin').type('invalid_username');
+  cy.get('#ctl00_CPHContainer_txtPassword').type('valid_password');
+});
+
+When('User enters a valid User ID', () => {
+  // Enter valid User ID
+  cy.get('#ctl00_CPHContainer_txtUserLogin').type('valid_username');
+  cy.get('#ctl00_CPHContainer_txtPassword').type('invalid_password');
+});
+
+And('User clicks on the login button', () => {
+  cy.get('#loginButton').click();
+});
+
+Then('User should be logged in successfully', () => {
+  // Add assertions for successful login
+  // For example:
+  cy.get('#welcomeMessage').should('contain', 'Welcome');
+});
+
+Then('User should see an error message', () => {
+  // Add assertions for error message
+  cy.get('#errorMessage').should('be.visible');
+});
